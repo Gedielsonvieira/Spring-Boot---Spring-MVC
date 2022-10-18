@@ -12,16 +12,17 @@ Spring veio para facilitar (deixar as configurações mais simples)
 
 ✅ Spring Boot é muito utilizado para montar microserviços
 
-Foi utilizado o spring-initializr que é um gerador de projetos com String Boot para gerar o projeto que já vem com a
+Para inicializar este projeto foi utilizado o spring-initializr que é um gerador de projetos com String Boot para gerar
+o projeto que já vem com a
 estrutura do Maven através do site https://start.spring.io/
 
 ### Anotações vistas:
 
-**@Controller -** que faz com que o Spring consegue encontrar essa classe atráves dessa anotação e faz o gerenciamento
+**@Controller -** faz com que o Spring consiga encontrar a classe atráves dessa anotação e o Spring faz o gerenciamento
 dela
-public class HelloController {
 
-**@RequestMapping("/") -** Para dizer em qual url o Spring vai chamar o método Hello()
+**@RequestMapping("/") -** Para dizer em qual url o Spring vai chamar o método retornaLista(), como esta sendo
+desenvolvido localmente é http://localhost:8080/topicos
 
 **@ResponseBody -** Inserimos essa anotação pois não temos uma página em nosso projeto, porque se não o Spring vai
 considerar que o retorno no caso a String "Hello World" é uma página e ele vai tentar procurar essa página em
@@ -109,3 +110,15 @@ através da anotação **@Entity** e em cima do atributo que representa a chave 
 > application.properties
 
 **@ManyToOne -** para indicar a cardinalidade de muitos para um em um atributo com relacionamento
+
+> Em uma aplicação que utiliza o Spring Data JPA, o acesso ao banco de dados é feito com a criação de uma interface,
+> seguindo o padrão Repository. Exemplo: public interface TopicoRepository
+> extends JpaRepository<Topico, Long>{}
+
+Em uma interface não precisa colocar nenhuma anotação em cima dela, pois o Spring já encontra a classe automaticamente.
+
+> Spring Data tem um padrão de nomenclatura e se seguirmos esse padrão ele consegue gerar a query de consulta ao BD
+> automaticamente, no nosso projeto, baseado no nome do método na interface repository.<br>
+> Padrão de nomenclatura ao filtrar por um atributo de um relacionamento em uma entidade:<br><br>
+> É válido separar o nome do atributo, que representa o relacionamento, do nome do atributo a ser filtrado, com o uso do operador - <strong>findByCurso_Nome(String nomeCurso);</strong><br><br>
+> É possível declarar o nome do método concatenando nele o nome do atributo que representa o relacionamento, seguido do nome do atributo a ser filtrado - <strong>findByCursoNome(String nomeCurso);</strong> 

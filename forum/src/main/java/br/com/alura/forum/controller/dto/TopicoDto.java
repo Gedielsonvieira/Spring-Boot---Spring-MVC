@@ -1,11 +1,12 @@
 package br.com.alura.forum.controller.dto;
 
-import br.com.alura.forum.modelo.Topico;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.alura.forum.modelo.Topico;
+
+//A classe TopicoDto foi criada para devolver somente os dados que queremos devolver no endpoit /topicos, porque não é uma boa prática devolver uma entidade JPA no controller, pois pode haver dados sensíveis.
 public class TopicoDto {
     private Long id;
     private String titulo;
