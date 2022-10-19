@@ -120,5 +120,10 @@ Em uma interface não precisa colocar nenhuma anotação em cima dela, pois o Sp
 > Spring Data tem um padrão de nomenclatura e se seguirmos esse padrão ele consegue gerar a query de consulta ao BD
 > automaticamente, no nosso projeto, baseado no nome do método na interface repository.<br>
 > Padrão de nomenclatura ao filtrar por um atributo de um relacionamento em uma entidade:<br><br>
-> É válido separar o nome do atributo, que representa o relacionamento, do nome do atributo a ser filtrado, com o uso do operador - <strong>findByCurso_Nome(String nomeCurso);</strong><br><br>
-> É possível declarar o nome do método concatenando nele o nome do atributo que representa o relacionamento, seguido do nome do atributo a ser filtrado - <strong>findByCursoNome(String nomeCurso);</strong> 
+> É válido separar o nome do atributo, que representa o relacionamento, do nome do atributo a ser filtrado, com o uso do
+> operador - <strong>findByCurso_Nome(String nomeCurso);</strong><br><br>
+> É possível declarar o nome do método concatenando nele o nome do atributo que representa o relacionamento, seguido do
+> nome do atributo a ser filtrado - <strong>findByCursoNome(String nomeCurso);</strong>
+
+## Trabalhando com POST
+**@ResquestBody -**  Indica ao Spring que os parâmetros enviados no corpo da requisição devem ser atribuídos ao parâmetro do método
