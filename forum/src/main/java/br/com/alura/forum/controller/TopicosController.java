@@ -14,6 +14,8 @@ import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repository.TopicoRepository;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/topicos")
 // Como este Controller responde as requisisçõa que começam com /topicos e para não ter que ficar repetindo essa anotação em cada método foi inserido na classe.
@@ -42,7 +44,9 @@ public class TopicosController {
     // TopicoForm é um Dto porém porém são dados que chegam do cliente para a API
     // @RequestBody - indica para o Spring que os dados (topicoForm) devem ser pegos do corpo da requisição
     @PostMapping
-    public ResponseEntity<TopicoDto> cadastrar(@RequestBody TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
+        //topicoForm o cliente mando um JSON e o Jackson converte isso em um objeto do tipo TopicoForm
+
         Topico topico = topicoForm.converter(cursoRepository);
         topicoRepository.save(topico);
 

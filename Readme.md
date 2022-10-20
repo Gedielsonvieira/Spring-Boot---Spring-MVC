@@ -103,8 +103,8 @@ Geralmente o mais utilizado é o JSON, mas poderia ser qualquer formato, como XM
   banco de dados.
 
 Ao utilizar JPA as classes de dominio que vão representar as tabelas no BD precisam ser transformadas em entidades
-através da anotação **@Entity** e em cima do atributo que representa a chave primária, tem que ter duas anotações, o **
-@Id** e o **@GeneratedValue** (no caso, a chave primária vai ser gerada automaticamente pelo banco de dados).
+através da anotação **@Entity** e em cima do atributo que representa a chave primária, tem que ter duas anotações, o
+**@Id** e o **@GeneratedValue** (no caso, a chave primária vai ser gerada automaticamente pelo banco de dados).
 
 > Em uma aplicação Spring Boot, são declaradas as configurações do banco de dados utilizado por ela no arquivo
 > application.properties
@@ -126,4 +126,50 @@ Em uma interface não precisa colocar nenhuma anotação em cima dela, pois o Sp
 > nome do atributo a ser filtrado - <strong>findByCursoNome(String nomeCurso);</strong>
 
 ## Trabalhando com POST
-**@ResquestBody -**  Indica ao Spring que os parâmetros enviados no corpo da requisição devem ser atribuídos ao parâmetro do método
+
+**@ResquestBody -**  Indica ao Spring que os parâmetros enviados no corpo da requisição devem ser atribuídos ao
+parâmetro do método
+
+**@RequestMapping -** Quando utilizado em cima da classe, serve para evitar repetir a URL em todos os métodos da classe
+controller.
+
+**@PostMapping -** Serve para mapear requisições do tipo POST
+
+✅ Devemos utilizar a classe **ResponseEntity** para montar uma resposta a ser devolvida para o cliente da API
+
+### Boas práticas no cadastro - POST
+
+✅ Boas práticas do REST é que ao fazer um POST devemos devolver o status code 201, que significa que algo foi criado,
+com cabeçalho location, que o valor vai ser a URI e o
+corpo da resposta sendo uma representação do recurso que acabou de ser criado;
+
+✅ Para receber dados enviados no corpo da requisição, a boa prática é criar uma classe que também siga o padrão DTO (
+Data Transfer Object), conforme classe TopicoForm.
+
+### Postman
+
+* Ao utilizar o verbo HTTP POST - Deve ser definido no Postman:
+    * **JSON -** Como precisamos enviar o corpo da requisição, os parametros, as informações para fazer o cadastro,
+      clicar em body
+      -> raw e inserir o JSON<br><br>
+
+    * **Cabeçalho -** Precisamos definir um cabeçalho para indicar para o servidor, que o corpo da requisição está em
+      formaro JSON, em
+      Headers -> Key = content-type e o value = application/json. **(O cabeçalho content-type é para o cliente dizer
+      qual
+      o tipo de conteúdo que esta sendo enviado).**
+
+## Validação com Bean Validation
+
+> Bean Validation é uma especificação do java que se integra com o Spring
+
+Utilizamos o Bean Validation para fazer validações através de anotações:
+
+* **@NotNull -** Faz uma validação em que o atributo não pode ser nulo
+* **@NotEmpty -** Faz uma validação em que o atributo não pode ser vazio
+
+**As anotações do Bean Validation são inseridas nos atributos onde queremos que ocorra a validação.**
+
+Mas além das anotações, precisamos dizer para o Spring chamar/executar o Bean Validation caso algum parâmetro esteja inválido
+conforme as anotações colocadas no atributo, fazemos isso com a anotação **@Valid** colocando ela onde vamos receber o
+corpo da requisição.

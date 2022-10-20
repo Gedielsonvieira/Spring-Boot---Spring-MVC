@@ -4,9 +4,16 @@ import br.com.alura.forum.modelo.Curso;
 import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repository.CursoRepository;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class TopicoForm {
+
+    @NotNull @NotEmpty
     private String titulo;
+    @NotNull @NotEmpty
     private String mensagem;
+    @NotNull @NotEmpty
     private String nomeCurso;//vamos ter que ir no BD e ver qual curso tem o nome recebido
 
     public String getTitulo() {
@@ -35,6 +42,7 @@ public class TopicoForm {
 
     // A classe TopicoForm não é uma classe do Spring e consequentemente não conseguimos injetar o repository, e por isso passamos o repository via parametro no método converter
     public Topico converter(CursoRepository cursoRepository) {
+        // Procuramos o nome do curso no BD, para carregar o objeto curso através do nome dele
         Curso curso = cursoRepository.findByNome(nomeCurso);
         return new Topico(titulo, mensagem, curso);
     }
