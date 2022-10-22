@@ -163,13 +163,22 @@ Data Transfer Object), conforme classe TopicoForm.
 
 > Bean Validation é uma especificação do java que se integra com o Spring
 
-Utilizamos o Bean Validation para fazer validações através de anotações:
+Para fazer validações das informações enviadas pelos clientes da API, podemos utilizar a especificação Bean Validation,
+com as anotações:
 
 * **@NotNull -** Faz uma validação em que o atributo não pode ser nulo
 * **@NotEmpty -** Faz uma validação em que o atributo não pode ser vazio
 
 **As anotações do Bean Validation são inseridas nos atributos onde queremos que ocorra a validação.**
 
-Mas além das anotações, precisamos dizer para o Spring chamar/executar o Bean Validation caso algum parâmetro esteja inválido
+Mas além das anotações, precisamos dizer para o Spring chamar/executar o Bean Validation caso algum parâmetro esteja
+inválido
 conforme as anotações colocadas no atributo, fazemos isso com a anotação **@Valid** colocando ela onde vamos receber o
-corpo da requisição.
+corpo da requisição, e com isso caso algum parâmetro esteja inválido vai ser retornado o status code 400.
+
+### Simplificando o JSON 
+> JSON retornado no corpo da resposta para o cliente de uma requisição inválida
+
+interceptador é chamado de Controller Advice
+
+inserir entendimento aqui 21/10/2022
