@@ -179,6 +179,19 @@ corpo da requisição, e com isso caso algum parâmetro esteja inválido vai ser
 ### Simplificando o JSON 
 > JSON retornado no corpo da resposta para o cliente de uma requisição inválida
 
-interceptador é chamado de Controller Advice
+Interceptador é chamado de Controller Advice
 
-inserir entendimento aqui 21/10/2022
+✅ Quando criar uma api e querer tratar o erro de uma api e quiser formatar - criar um ControllerAdvice
+
+✅ Para cada execeção podemos criar uma função que vai tratar essa função especifica, ou gerar ou HttpStatus diferente
+
+
+Autowired - de forma grotesca da new em uma classe por baixo dos panos
+
+Vantagens de ter o Dto
+Flexibilidade - podemos criar outros Dto's conforme necessidade, Exemplo: ao precisar mostrar mais informações.
+
+Em um do Dto só retornamos primitivos, String, int, Data, Enum e nunca uma entidade/classe
+
+
+

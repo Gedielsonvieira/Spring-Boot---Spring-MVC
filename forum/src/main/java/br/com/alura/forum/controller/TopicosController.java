@@ -3,6 +3,7 @@ package br.com.alura.forum.controller;
 import java.net.URI;
 import java.util.List;
 
+import br.com.alura.forum.controller.dto.DetalhesDoTopicoDto;
 import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class TopicosController {
     @Autowired
     private CursoRepository cursoRepository;
 
-    @GetMapping// utilizando o verbo HTTP GET para diferenciar os métodos, pois os dois fazem parte do mesmo recurso /topicos
+    @GetMapping
+// utilizando o verbo HTTP GET para diferenciar os métodos, pois os dois fazem parte do mesmo recurso /topicos
     // Dto dados que saem da API e vão para o cliente
     public List<TopicoDto> retornaLista(String nomeCurso) {
         if (nomeCurso == null) {
@@ -52,6 +54,15 @@ public class TopicosController {
 
         URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
         return ResponseEntity.created(uri).body(new TopicoDto(topico));
+    }
+
+    // Como temos dois verbos Get se não especificarmos qual topico queremos detalhar terá conflito
+    // @PathVariable precisamos avisar para o Spring que o parâmetro Long id não virá numa interrogação e sim no barra ("/"), na URL.
+    // Para dizer isso pro Spring, existe uma anotação, @PathVariable, que se trata de uma variável do Path, da URL.
+    @GetMapping("/{id}")
+    public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {//path dinâmico
+        Topico topico = topicoRepository.getReferenceById(id);//getReferenceById(id) busca por um id
+        return new DetalhesDoTopicoDto(topico);
     }
 
 }
