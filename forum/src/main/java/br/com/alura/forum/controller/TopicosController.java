@@ -3,6 +3,7 @@ package br.com.alura.forum.controller;
 import java.net.URI;
 import java.util.List;
 
+import br.com.alura.forum.controller.form.AtualizacaoTopicoForm;
 import br.com.alura.forum.controller.dto.DetalhesDoTopicoDto;
 import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.repository.CursoRepository;
@@ -15,6 +16,7 @@ import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repository.TopicoRepository;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
@@ -63,6 +65,17 @@ public class TopicosController {
     public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {//path dinâmico
         Topico topico = topicoRepository.getReferenceById(id);//getReferenceById(id) busca por um id
         return new DetalhesDoTopicoDto(topico);
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm atualizacaoTopicoForm){
+        //Não conseguimos ter essas informações dentro da classe atualizacaoTopicoForm por isso estamos passando via parâmetro
+        Topico topico = atualizacaoTopicoForm.atualizar(id, topicoRepository);
+
+        return ResponseEntity.ok(new TopicoDto(topico));
+
+        /*Dúvida falar com o carlos de como é acessado os getters*/
     }
 
 }

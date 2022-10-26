@@ -176,7 +176,8 @@ inválido
 conforme as anotações colocadas no atributo, fazemos isso com a anotação **@Valid** colocando ela onde vamos receber o
 corpo da requisição, e com isso caso algum parâmetro esteja inválido vai ser retornado o status code 400.
 
-### Simplificando o JSON 
+### Simplificando o JSON
+
 > JSON retornado no corpo da resposta para o cliente de uma requisição inválida
 
 Interceptador é chamado de Controller Advice
@@ -185,6 +186,7 @@ Interceptador é chamado de Controller Advice
 
 ✅ Para cada execeção podemos criar uma função que vai tratar essa função especifica, ou gerar ou HttpStatus diferente
 
+## Métodos PUT, DELETE e tratamento de erro
 
 Autowired - de forma grotesca da new em uma classe por baixo dos panos
 
@@ -193,5 +195,7 @@ Flexibilidade - podemos criar outros Dto's conforme necessidade, Exemplo: ao pre
 
 Em um do Dto só retornamos primitivos, String, int, Data, Enum e nunca uma entidade/classe
 
-
+@PutMapping
+no verbo http put precisamos inserir a anotação @Transactional por que se não o Spring não roda o update no BD, caso não
+ocorra um exception
 
