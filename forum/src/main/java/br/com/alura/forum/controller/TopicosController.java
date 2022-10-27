@@ -91,7 +91,7 @@ public class TopicosController {
         Optional<Topico> optional = topicoRepository.findById(id);
         if (optional.isPresent()) {
             topicoRepository.deleteById(id);
-            return ResponseEntity.ok().build();//o que é esse .build() depois do ok
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }

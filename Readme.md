@@ -190,30 +190,29 @@ Interceptador é chamado de Controller Advice
 
 ## Métodos PUT, DELETE e tratamento de erro
 
-Autowired - de forma grotesca da new em uma classe por baixo dos panos
+Autowired - De forma grotesca, da new em uma classe por baixo dos panos
 
-Vantagens de ter o Dto
-Flexibilidade - podemos criar outros Dto's conforme necessidade, Exemplo: ao precisar mostrar mais informações.
+### Vantagens de ter o Dto:
+✅ Flexibilidade - podemos criar outros Dto's conforme necessidade, Exemplo: ao precisar mostrar mais informações.
 
-Em um do Dto só retornamos primitivos, String, int, Data, Enum e nunca uma entidade/classe
+> Em um do Dto só retornamos primitivos, String, int, Data, Enum e nunca uma entidade/classe
 
-@PutMapping
-No verbo http PUT precisamos inserir a anotação @Transactional por que se não o Spring não roda o update no BD, caso não
-ocorra um exception
+**@PutMapping -** Serve para mapear requisições do tipo PUT
 
-@Transactional, serve para avisar para o Spring que é para commitar a transação no final do método.
+**@DeleteMapping -** Serve para mapear requisições do tipo DELETE
 
-Segundo o Spring data todo método que tiver uma operação de escrita, ou seja:
-*-*-*-*-*-*-*-Dúvida como assim escrita? falar com Carlos-*-*-*-*-*-*-*-
+**@Transactional -** serve para avisar para o Spring que é para commitar a transação no final do método.
 
-* Salvar;
-* Alterar e,
-* excluir
+**Segundo o Spring data todo método que tiver uma operação de escrita, deve ter a anotação @Transactional ou seja:**
 
-**É importante fazer um tratamento para quando um recurso não for encontrado, devolvendo nesses casos o código HTTP 404,
+* **Salvar;**
+* **Alterar e,**
+* **excluir**
+
+>É importante fazer um tratamento para quando um recurso não for encontrado, devolvendo nesses casos o código HTTP 404,
 porque assim evitamos que uma exception ou uma stack trace seja devolvida para o cliente no corpo da resposta.**
 
-**Para tratar o erro 404 na classe controller, devemos utilizar o método findById, ao invés do método getReferenceById,
+>Para tratar o erro 404 na classe controller, devemos utilizar o método findById, ao invés do método getReferenceById,
 porque o método getReferenceById já toma como premissa que o id existe gerando um erro caso não exista e o método
 findById retorna um objeto Optional<>, que pode ou não conter um objeto, assim podemos fazer a validação que
-precisamos**
+precisamos
