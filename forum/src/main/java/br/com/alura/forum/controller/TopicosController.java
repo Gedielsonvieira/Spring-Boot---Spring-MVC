@@ -2,6 +2,7 @@ package br.com.alura.forum.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import br.com.alura.forum.controller.form.AtualizacaoTopicoForm;
 import br.com.alura.forum.controller.dto.DetalhesDoTopicoDto;
@@ -62,20 +63,37 @@ public class TopicosController {
     // @PathVariable precisamos avisar para o Spring que o parâmetro Long id não virá numa interrogação e sim no barra ("/"), na URL.
     // Para dizer isso pro Spring, existe uma anotação, @PathVariable, que se trata de uma variável do Path, da URL.
     @GetMapping("/{id}")
-    public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {//path dinâmico
-        Topico topico = topicoRepository.getReferenceById(id);//getReferenceById(id) busca por um id
-        return new DetalhesDoTopicoDto(topico);
+    public ResponseEntity<DetalhesDoTopicoDto> detalhar(@PathVariable Long id) {//path dinâmico
+        Optional<Topico> topico = topicoRepository.findById(id);
+        if (topico.isPresent()) {
+            return ResponseEntity.ok(new DetalhesDoTopicoDto(topico.get()));
+            //precisamos dar um get porque até então o tópico, é um tópico do tipo Optional e quando damos um get, de fato ele acessa um topico do Tipo Topico
+        }
+        return ResponseEntity.notFound().build();
+
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm atualizacaoTopicoForm){
-        //Não conseguimos ter essas informações dentro da classe atualizacaoTopicoForm por isso estamos passando via parâmetro
-        Topico topico = atualizacaoTopicoForm.atualizar(id, topicoRepository);
+    public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm atualizacaoTopicoForm) {
+        Optional<Topico> optional = topicoRepository.findById(id);
+        if (optional.isPresent()) {
+            //Não conseguimos ter essas informações dentro da classe atualizacaoTopicoForm por isso estamos passando via parâmetro
+            Topico topico = atualizacaoTopicoForm.atualizar(id, topicoRepository);
+            return ResponseEntity.ok(new TopicoDto(topico));
+        }
+        return ResponseEntity.notFound().build();
+    }
 
-        return ResponseEntity.ok(new TopicoDto(topico));
-
-        /*Dúvida falar com o carlos de como é acessado os getters*/
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id) {
+        Optional<Topico> optional = topicoRepository.findById(id);
+        if (optional.isPresent()) {
+            topicoRepository.deleteById(id);
+            return ResponseEntity.ok().build();//o que é esse .build() depois do ok
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

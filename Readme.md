@@ -1,4 +1,4 @@
-Assistir podcast do spring e enisirer o que entendeu aqui
+**Assistir podcast do spring e enisirer o que entendeu aqui
 
 Spring veio para facilitar (deixar as configurações mais simples)
 
@@ -50,6 +50,8 @@ comportamento padrão de todos os métodos
   endpoint devolver x atributos, e, em outro, y.
   Se você sempre devolve a classe de domínio - a entidade da JPA - ele sempre vai devolver todos os atributos,
   você não tem flexibilidade. Por isso não é uma boa prática.
+
+- Para receber parâmetros dinâmicos no path da URL, devemos utilizar a anotação **@PathVariable**;
 
 ## Publicando Endpoints
 
@@ -196,6 +198,22 @@ Flexibilidade - podemos criar outros Dto's conforme necessidade, Exemplo: ao pre
 Em um do Dto só retornamos primitivos, String, int, Data, Enum e nunca uma entidade/classe
 
 @PutMapping
-no verbo http put precisamos inserir a anotação @Transactional por que se não o Spring não roda o update no BD, caso não
+No verbo http PUT precisamos inserir a anotação @Transactional por que se não o Spring não roda o update no BD, caso não
 ocorra um exception
 
+@Transactional, serve para avisar para o Spring que é para commitar a transação no final do método.
+
+Segundo o Spring data todo método que tiver uma operação de escrita, ou seja:
+*-*-*-*-*-*-*-Dúvida como assim escrita? falar com Carlos-*-*-*-*-*-*-*-
+
+* Salvar;
+* Alterar e,
+* excluir
+
+**É importante fazer um tratamento para quando um recurso não for encontrado, devolvendo nesses casos o código HTTP 404,
+porque assim evitamos que uma exception ou uma stack trace seja devolvida para o cliente no corpo da resposta.**
+
+**Para tratar o erro 404 na classe controller, devemos utilizar o método findById, ao invés do método getReferenceById,
+porque o método getReferenceById já toma como premissa que o id existe gerando um erro caso não exista e o método
+findById retorna um objeto Optional<>, que pode ou não conter um objeto, assim podemos fazer a validação que
+precisamos**
