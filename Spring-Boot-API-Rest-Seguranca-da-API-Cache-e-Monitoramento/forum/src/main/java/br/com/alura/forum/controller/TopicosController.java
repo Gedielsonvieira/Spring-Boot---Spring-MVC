@@ -10,8 +10,9 @@ import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,18 +36,32 @@ public class TopicosController {
     private CursoRepository cursoRepository;
 
     @GetMapping
-// utilizando o verbo HTTP GET para diferenciar os métodos, pois os dois fazem parte do mesmo recurso /topicos
+    // utilizando o verbo HTTP GET para diferenciar os métodos, pois os dois fazem parte do mesmo recurso /topicos
     // Dto dados que saem da API e vão para o cliente
-    public Page<TopicoDto> retornaLista(@RequestParam(required = false) String nomeCurso, @RequestParam int pagina, @RequestParam int quantidade) {
 
-        Pageable paginacao = PageRequest.of(pagina,quantidade);
+    /*
+    Para fazer a ordenação na consulta ao banco de dados, devemos utilizar a interface Pageable, passando como
+    parâmetro a direção da ordenação, utilizando a classe Direction, e o nome do atributo para ordenar;
+
+    public Page<TopicoDto> retornaLista(@RequestParam(required = false) String nomeCurso, @RequestParam int pagina,
+                                        @RequestParam int quantidade, @RequestParam String ordenacao)
+    Pageable paginacao = PageRequest.of(pagina, quantidade, Sort.Direction.DESC, ordenacao);
+    */
+
+
+    public Page<TopicoDto> retornaLista(@RequestParam(required = false) String nomeCurso,
+                                        @PageableDefault(sort = "id", direction = Sort.Direction.DESC, page = 0, size = 10)
+                                        Pageable paginacao) {
 
         if (nomeCurso == null) {
             Page<Topico> topicos = topicoRepository.findAll(paginacao);
+            // Os métodos do Spring já sabem que, quando chega um pageable, é para fazer a paginação via JPA e a lógica de paginação é feita automaticamente
             return TopicoDto.converter(topicos);
         } else {
             Page<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso, paginacao);
             return TopicoDto.converter(topicos);
+            // Ao utilizar o objeto Page, além de devolver os registros, o Spring também devolve informações sobre a
+            // paginação no JSON de resposta, como número total de registros e páginas.
         }
     }
 
