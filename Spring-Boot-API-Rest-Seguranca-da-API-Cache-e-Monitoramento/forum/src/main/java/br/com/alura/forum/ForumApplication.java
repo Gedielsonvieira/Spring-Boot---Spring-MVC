@@ -2,9 +2,11 @@ package br.com.alura.forum;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 
 @SpringBootApplication
+@EnableCaching// habilita o uso de cache na aplicação
 @EnableSpringDataWebSupport
 /*
 Para receber os parâmetros de ordenação e paginação diretamente nos métodos do controller, devemos habilitar o módulo
