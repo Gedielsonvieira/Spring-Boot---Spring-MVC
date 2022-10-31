@@ -1,7 +1,6 @@
 package br.com.alura.forum.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import br.com.alura.forum.controller.form.AtualizacaoTopicoForm;
@@ -9,6 +8,7 @@ import br.com.alura.forum.controller.dto.DetalhesDoTopicoDto;
 import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,6 +72,8 @@ public class TopicosController {
     // @RequestBody - indica para o Spring que os dados (topicoForm) devem ser pegos do corpo da requisição
     @PostMapping
     @Transactional
+    //informamos que queremos limpar o cache com o nome listaDeTopicos, e estamos limpando todos os registros com allEntries = true
+    @CacheEvict(value = "listaDeTopicos", allEntries = true)
     public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
         //topicoForm o cliente mando um JSON e o Jackson converte isso em um objeto do tipo TopicoForm
 
@@ -98,6 +100,7 @@ public class TopicosController {
 
     @PutMapping("/{id}")
     @Transactional
+    @CacheEvict(value = "listaDeTopicos", allEntries = true)
     public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm atualizacaoTopicoForm) {
         Optional<Topico> optional = topicoRepository.findById(id);
         if (optional.isPresent()) {
@@ -110,6 +113,7 @@ public class TopicosController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @CacheEvict(value = "listaDeTopicos", allEntries = true)
     public ResponseEntity excluir(@PathVariable Long id) {
         Optional<Topico> optional = topicoRepository.findById(id);
         if (optional.isPresent()) {

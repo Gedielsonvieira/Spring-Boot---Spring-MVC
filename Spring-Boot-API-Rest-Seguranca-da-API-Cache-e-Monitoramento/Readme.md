@@ -24,6 +24,9 @@ informações
 
 ## Melhorando desempenho com Spring Cache
 
+**Cache é um recurso que utilizamos para ganhar performance na aplicação, principalmente onde temos pesquisas ao banco
+de dados.**
+
 > A ideia é que, ao utilizar o cache, conseguimos dizer para o Spring guardar o retorno de um método em cache. Na
 > primeira vez que acionarmos aquele método, ele vai executar linha por linha do método e vai devolver o resultado.
 > Porém,
@@ -48,3 +51,14 @@ toda vez que ele for fazer uma chamada no banco de dados.**
 **spring.jpa.properties.hibernate.show_sql=true -** Isso fala para o hibernate imprimir os comandos SQL que ele dispara
 toda vez que acessa o banco de dados
 **spring.jpa.properties.hibernate.format_sql=true -** Deixa o SQL formatado.
+
+### Limpando Cache
+
+Para que o usuário não veja uma informação desatualizada, devemos limpar o cache e para isso utilizaremos a anotação:
+**@CacheEvict -** Ela deve ser utilizada nos métodos que alteraram os registros armazenados em cache pela API, e no seu
+parâmetro value devemos indicar qual cache queremos limpar/invalidar
+
+### Boas práticas no uso do cache
+
+✅ Devemos utilizar o cache onde faz sentido, ou seja, em métodos que nunca ou raramente vão ser atualizados, porque assim evitamos esse custo de
+processamento de ter que limpar o cache e guardar novamente as informações.
