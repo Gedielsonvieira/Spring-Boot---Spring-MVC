@@ -36,7 +36,8 @@ Nesta aplicação estamos utilizando um provedor padrão do Spring que não é r
 uma aplicação rodando em produção, o ideal é utilizar algum provedor de cache.
 
 Além de declararmos a dependencia de cache, precisamos habilitar o uso de cache na aplicação com a anotação
-**@EnableCaching** na classe main.
+**@EnableCaching** na classe main **(para habilitar os módulos na aplicação, precisamos inserir as devidas anotações na
+classe main)**.
 
 **@Cacheable -** Serve para avisar o Spring para guardar o retorno do método em cache e nesta anotação precisamos passar
 uma String que vai ser o identificador unico deste cache, isto para diferenciar de outros métodos que terão a anotação
@@ -60,5 +61,13 @@ parâmetro value devemos indicar qual cache queremos limpar/invalidar
 
 ### Boas práticas no uso do cache
 
-✅ Devemos utilizar o cache onde faz sentido, ou seja, em métodos que nunca ou raramente vão ser atualizados, porque assim evitamos esse custo de
+✅ Devemos utilizar o cache onde faz sentido, ou seja, em métodos que nunca ou raramente vão ser atualizados, porque
+assim evitamos esse custo de
 processamento de ter que limpar o cache e guardar novamente as informações.
+
+## Proteção com Spring Security
+
+> O Spring Boot possui um módulo focado somente nessa parte de segurança, que cuida da parte de autenticação e
+> autorização, que é o spring security
+
+✅ Ao habilitar o Spring Security, por padrão ele bloqueia todos os endpoints
