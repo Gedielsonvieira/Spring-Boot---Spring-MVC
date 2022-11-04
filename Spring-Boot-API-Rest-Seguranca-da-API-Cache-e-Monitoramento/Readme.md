@@ -71,3 +71,43 @@ processamento de ter que limpar o cache e guardar novamente as informações.
 > autorização, que é o spring security
 
 ✅ Ao habilitar o Spring Security, por padrão ele bloqueia todos os endpoints
+
+### Resumo - Proteção com Spring Security
+
+Liberamos o acesso ao endpoint /topicos e /topicos/* para as requisições do tipo GET e após bloqueamos as demais
+requisições pois precisam de autenticação.
+
+Como não temos implementada a parte de autenticação teremos de desenvolver isso, e, para isso precisamos:
+
+- **Ter uma classe que representa o usuario, um atributo que representa a senha dele e uma classe que representa o
+  perfil de acesso, pois para o cliente
+  disparar requisições, ele vai precisar estar autenticado. A classe usuário vai ser utilizada para o usuário fazer
+  autenticação do sistema**
+
+
+- Para o spring security saber uma classe reprensenta o usuario precisamos implementar a interface UserDetails que é a
+  interface p/ dizer que essa é a classe que tem detalhes de um usuário.
+  As informações email e senha da classe usuario são as info que vai ser utilizadas para o user se auth no sistema
+
+
+- Para o Spring security, além de ter uma classe usuário, precisa ter uma classe também que representa o perfil do
+  usuário, que é o perfil relacionado com as permissões de acesso dele, na classe que representa o perfil precisamos
+  implementar uma interface do Spring    "GrantedAuthority" que tem um método que utilizamos para retornar o nome do
+  perfil
+
+Após mapeado a classe usuário e perfil, seguindo as interfaces Spring para conseguirmos ter a autenticação geramos na
+classe "SecurityConfigurator", um formulário para autenticação que é onde o usuário literalmente vai estar sendo
+autenticado
+
+### Resumo do Resumo - Proteção com Spring Security
+
+Para termos uma lógica de autenticação, antes, precisamos ter uma classe que representa o usuario, um atributo que
+representa a senha dele e uma classe que representa o perfil de acesso seguindo as interfaces do Spring.
+
+### Autenticando o usuário
+
+É necessário criar uma classe, implementando a interface UserDetailsService do Spring Security, para indicar ao Spring
+Security que essa é a classe service que executa a lógica de autenticação
+
+#### Resumo - Autenticação do usuário
+
