@@ -1,7 +1,6 @@
 package br.com.alura.forum.config.security;
 
 
-import br.com.alura.forum.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity// Habilita o modulo de segurança na aplicação
@@ -17,17 +17,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 ler as configurações que estiverem dentro desta classe */
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private AutenticacaoService autenticacaoService;
+    private AutenticacaoService autenticacaoService;
 
-    /*    ------------Tentando intender Autowired:-------------- */
-    private UsuarioRepository usuarioRepository;
-
-    public SecurityConfigurations(UsuarioRepository usuarioRepository){
-        this.usuarioRepository = usuarioRepository;
-    }
     @Autowired
-    AutenticacaoService autenticacaoService = new AutenticacaoService(usuarioRepository);
+    public SecurityConfigurations(AutenticacaoService autenticacaoService) {
+        this.autenticacaoService = autenticacaoService;
+    }
 
     //Configurações de autenticação (controle de acesso - login)
     @Override
@@ -45,8 +40,10 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 // Requisiçoes permitidas/públicas somente para o endpoint que lista todos os tópicos e o que detalha um tópico específico
                 .antMatchers(HttpMethod.GET, "/topicos").permitAll() // método GET de /topicos esta permitido (Liberando o acesso a url /topicos somente do verbo GET)
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+                .antMatchers(HttpMethod.POST,"/auth").permitAll()
                 .anyRequest().authenticated()// Qualquer outra requisição tem que estar autenticada
-                .and().formLogin();
+                .and().csrf().disable()//csrf é uma abreviação para um tipo de ataque hacker que acontece em aplicação web e como vamos fazer autenticação via token a nossa API está livre desse ataque
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//Aqui avisamos para o Spring que ao ser realizado alguma autenticação não é para criar seção
     }
 
     //Configurações de recursos estáticos (requisições para aqureuivos - JS,CSS, images)

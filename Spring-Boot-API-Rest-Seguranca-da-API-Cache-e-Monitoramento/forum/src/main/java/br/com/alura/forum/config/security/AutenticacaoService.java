@@ -1,6 +1,5 @@
 package br.com.alura.forum.config.security;
 
-import br.com.alura.forum.controller.TopicosController;
 import br.com.alura.forum.modelo.Usuario;
 import br.com.alura.forum.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +11,13 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 //Para informarmos para o Spring Que essa é a service que tem a lógica de autenticação devemos implementar a interface UserDetailsService
-@Service
+@Service //@service é colocado em classes de serviço(uma classe que executa toda a regra de negócio)
 public class AutenticacaoService implements UserDetailsService {
-//    @Autowired
-//    private UsuarioRepository usuarioRepository;
-
-
-    /*  ------------Tentando intender Autowired:-------------- */
 
     private UsuarioRepository usuarioRepository;
 
-    public AutenticacaoService(UsuarioRepository usuarioRepository){
+    @Autowired
+    public AutenticacaoService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
