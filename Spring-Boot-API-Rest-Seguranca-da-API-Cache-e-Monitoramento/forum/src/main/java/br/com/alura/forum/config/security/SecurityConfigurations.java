@@ -2,8 +2,10 @@ package br.com.alura.forum.config.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -16,6 +18,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration/* Como essa classe irá ter configurações precisamos dessa anotação, que ao startar a aplicação o Spring irá carregar e
 ler as configurações que estiverem dentro desta classe */
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
+    @Override
+    @Bean
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 
     private AutenticacaoService autenticacaoService;
 
@@ -40,7 +47,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 // Requisiçoes permitidas/públicas somente para o endpoint que lista todos os tópicos e o que detalha um tópico específico
                 .antMatchers(HttpMethod.GET, "/topicos").permitAll() // método GET de /topicos esta permitido (Liberando o acesso a url /topicos somente do verbo GET)
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
-                .antMatchers(HttpMethod.POST,"/auth").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .anyRequest().authenticated()// Qualquer outra requisição tem que estar autenticada
                 .and().csrf().disable()//csrf é uma abreviação para um tipo de ataque hacker que acontece em aplicação web e como vamos fazer autenticação via token a nossa API está livre desse ataque
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//Aqui avisamos para o Spring que ao ser realizado alguma autenticação não é para criar seção

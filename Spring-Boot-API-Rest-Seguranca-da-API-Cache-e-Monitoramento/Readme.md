@@ -109,7 +109,7 @@ representa a senha dele e uma classe que representa o perfil de acesso seguindo 
 É necessário criar uma classe, implementando a interface UserDetailsService do Spring Security, para indicar ao Spring
 Security que essa é a classe service que executa a lógica de autenticação
 
-### O que foi visto:
+### O que foi visto - Spring Security:
 
 - Para utilizar o módulo do Spring Security, devemos adicioná-lo como dependência do projeto no arquivo pom.xml;
 - Para habilitar e configurar o controle de autenticação e autorização do projeto, devemos criar uma classe e anotá-la
@@ -136,4 +136,4 @@ Security que essa é a classe service que executa a lógica de autenticação
 
     * **O que é autenticação com o uso de session?** É quando o usuário faz o login e o sistema cria uma sessão (que é um
       espaço na memória) e nessa
-      session ele armazena as informações do usuário, armazena o estado.
+      session ele armazena as informações do usuário, armazena o estado.s
