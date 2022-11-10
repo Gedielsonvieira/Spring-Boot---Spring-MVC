@@ -1,6 +1,8 @@
 package br.com.alura.forum.config.security;
 
 
+import br.com.alura.forum.modelo.Usuario;
+import br.com.alura.forum.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity// Habilita o modulo de segurança na aplicação
 @Configuration/* Como essa classe irá ter configurações precisamos dessa anotação, que ao startar a aplicação o Spring irá carregar e
@@ -23,6 +26,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
+    @Autowired //parece algo fixo n consigo enxergar como esse token vai variar levando em consideração cada cliente
+    private TokenService tokenService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     private AutenticacaoService autenticacaoService;
 
@@ -50,7 +58,8 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .anyRequest().authenticated()// Qualquer outra requisição tem que estar autenticada
                 .and().csrf().disable()//csrf é uma abreviação para um tipo de ataque hacker que acontece em aplicação web e como vamos fazer autenticação via token a nossa API está livre desse ataque
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//Aqui avisamos para o Spring que ao ser realizado alguma autenticação não é para criar seção
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//Aqui avisamos para o Spring que ao ser realizado alguma autenticação não é para criar seção
+                .and().addFilterBefore(new AutenticacoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);//Para registrar a classe que tem o filtro não é via anotação tem de ser na classe SecurityConfiguration e adicionamos o filtro antes do filtro de autenticação padrão do Spring
     }
 
     //Configurações de recursos estáticos (requisições para aqureuivos - JS,CSS, images)

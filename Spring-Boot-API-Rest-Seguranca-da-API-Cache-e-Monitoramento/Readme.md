@@ -134,6 +134,27 @@ Security que essa é a classe service que executa a lógica de autenticação
 - Porque em uma API Rest, não é uma boa prática utilizar autenticação com o uso de session e uma das maneiras de fazer
   autenticação stateless é utilizando tokens JWT.
 
-    * **O que é autenticação com o uso de session?** É quando o usuário faz o login e o sistema cria uma sessão (que é um
+    * **O que é autenticação com o uso de session?** É quando o usuário faz o login e o sistema cria uma sessão (que é
+      um
       espaço na memória) e nessa
-      session ele armazena as informações do usuário, armazena o estado.s
+      session ele armazena as informações do usuário, armazena o estado.
+
+## Autenticação via JWT
+
+> Processo: cliente faz uma requisição do tipo POST com o email e senha no corpo da requisição para o endereço /auth que
+> é o endereço de autenticação e a nossa API retorna um token e o tipo de autenticação, após isso ele tem de colocar no
+> cabeçalho de cada requisição o token e o tipo de autenticação para ter acesso a todos os endpoints atráves desse token
+> conforme tempo de expiração
+
+- Para recuperar o token:
+- Para validar o token:
+- **Para Autenticar o cliente via Spring Security:** Tivemos que criar um filter para pegar o token do cabeçalho, validar, forçar
+      autenticação via Spring security, registrar o filtro no security Configuration, injetar os parâmetros para passar
+      para o filter, porque no filtro não posso receber via injeção de dependências, tivemos que criar o
+      AutenticacaoController e  o tokenService.
+
+## Conhecimento complementar
+
+- Bean: é um objeto que segue as especificações do JavaBeans
+
+

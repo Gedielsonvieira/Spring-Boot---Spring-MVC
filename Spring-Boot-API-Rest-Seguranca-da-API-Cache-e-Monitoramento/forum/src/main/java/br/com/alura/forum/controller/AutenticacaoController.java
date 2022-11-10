@@ -23,6 +23,7 @@ import javax.validation.Valid;
 public class AutenticacaoController {
 
     //Para fazer uma autenticação de maneira manual no Spring Security precisamos dessa classe
+    //Para disparar o processo de autenticação com usuário e senha
     @Autowired
     private AuthenticationManager authManager;
 
@@ -41,7 +42,8 @@ public class AutenticacaoController {
             Authentication authentication = authManager.authenticate(dadosLogin);//Essa linha é confusa
 
             //Antes de devolver o ok, precisamos gerar o token
-            //Para identificar quem é o usuário e para qual usuário pertence o token, o método gerarToken recebe como parâmetro o authentication pois com ele conseguimos extrair o usuário que esta logado no sistema
+            //Para identificar quem é o usuário e para qual usuário pertence o token, o método gerarToken recebe como
+            //parâmetro o authentication pois com ele conseguimos extrair o usuário que esta logado no sistema
             String token = tokenService.gerarToken(authentication);
             return ResponseEntity.ok(new TokenDto(token, "Bearer"));
         } catch (AuthenticationException e) {
