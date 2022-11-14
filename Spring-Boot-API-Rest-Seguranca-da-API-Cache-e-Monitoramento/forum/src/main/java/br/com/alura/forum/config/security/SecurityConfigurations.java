@@ -56,6 +56,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/topicos").permitAll() // método GET de /topicos esta permitido (Liberando o acesso a url /topicos somente do verbo GET)
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .anyRequest().authenticated()// Qualquer outra requisição tem que estar autenticada
                 .and().csrf().disable()//csrf é uma abreviação para um tipo de ataque hacker que acontece em aplicação web e como vamos fazer autenticação via token a nossa API está livre desse ataque
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//Aqui avisamos para o Spring que ao ser realizado alguma autenticação não é para criar seção

@@ -148,10 +148,37 @@ Security que essa é a classe service que executa a lógica de autenticação
 
 - Para recuperar o token:
 - Para validar o token:
-- **Para Autenticar o cliente via Spring Security:** Tivemos que criar um filter para pegar o token do cabeçalho, validar, forçar
-      autenticação via Spring security, registrar o filtro no security Configuration, injetar os parâmetros para passar
-      para o filter, porque no filtro não posso receber via injeção de dependências, tivemos que criar o
-      AutenticacaoController e  o tokenService.
+- **Para Autenticar o cliente via Spring Security:** Tivemos que criar um filter para pegar o token do cabeçalho,
+  validar, forçar
+  autenticação via Spring security, registrar o filtro no security Configuration, injetar os parâmetros para passar
+  para o filter, porque no filtro não posso receber via injeção de dependências, tivemos que criar o
+  AutenticacaoController e o tokenService.
+
+## Monitoramento com Spring Boot Actuator
+
+> Actuator é uma API que tem endpoints que devolvem um JSON com informações sobre a nossa API. É uma facilidade para
+> conseguir
+> monitorar e acompanhar o andamento da nossa API.
+
+- As informações que ele exibe podem ser customizadas pela API
+- É uma ferramenta utilizada para monitoramento de uma API
+
+**A equipe de de desenvolvimento da API só vai ativar o actuator, configurar o que queremos e não queremos expor, e
+passar
+o endereço para o pessoal que vai cuidar da parte de infraestrutura. Esse pessoal já tem ferramentas que vão disparar
+requisições para esse endereço, vão puxar o JSON, montar um gráfico, algo do gênero.**
+
+### Spring Boot Admin
+
+> Caso o time de insfraestrutura não tenha ferramenta para fazer este monitoramento, existe uma ferramenta que se
+> integra com o Spring Boot e que tem uma interface web para puxar essas informações do actuator e exibir de maneira
+> visual, com gráficos...
+
+- Ele deve ser criado como uma aplicação Spring Boot
+- Ele fornece uma interface gráfica para monitoramento da API contendo detalhes sobre os recursos utilizados pela API
+
+**Para que o Spring Boot Admin Server monitore uma API devemos adicionar o endereço do projeto Spring Boot Admin Server
+nas configurações da API cliente**
 
 ## Conhecimento complementar
 
