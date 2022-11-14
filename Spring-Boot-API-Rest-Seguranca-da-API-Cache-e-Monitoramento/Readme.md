@@ -180,6 +180,15 @@ requisições para esse endereço, vão puxar o JSON, montar um gráfico, algo d
 **Para que o Spring Boot Admin Server monitore uma API devemos adicionar o endereço do projeto Spring Boot Admin Server
 nas configurações da API cliente**
 
+## Documentação da API com Swagger
+
+> Devemos documentar nossa API para que os clientes onsigam entender, saber como funciona e fazer testes
+
+O Swagger é uma suit que contém várias ferramentas. Por exemplo: 
+- Ferramentas para fazer design de API, para automatizar a criação da API. Baseado no projeto, ele vai gerar o código. Para testes e também para documentação. Se
+você tem uma API pronta, em Java, usando Spring Boot, o Swagger tem ferramentas que conseguem automatizar a leitura
+dessa API e gera uma documentação.
+
 ## Conhecimento complementar
 
 - Bean: é um objeto que segue as especificações do JavaBeans

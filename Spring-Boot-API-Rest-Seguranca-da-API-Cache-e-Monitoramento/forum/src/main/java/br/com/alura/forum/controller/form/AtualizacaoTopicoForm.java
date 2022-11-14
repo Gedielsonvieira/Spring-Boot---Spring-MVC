@@ -31,7 +31,7 @@ public class AtualizacaoTopicoForm {
     }
 
     public Topico atualizar(Long id, TopicoRepository topicoRepository) {
-        Topico topico = topicoRepository.getReferenceById(id);
+        Topico topico = topicoRepository.getOne(id);
         topico.setTitulo(this.titulo);//this nesse caso é o json que foi enviado do postman para a API (que o usuário enviou)
         topico.setMensagem(this.mensagem);
         return topico;

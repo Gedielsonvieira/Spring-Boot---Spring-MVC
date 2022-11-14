@@ -26,6 +26,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
+
     @Autowired //parece algo fixo n consigo enxergar como esse token vai variar levando em consideração cada cliente
     private TokenService tokenService;
 
@@ -63,9 +64,10 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .and().addFilterBefore(new AutenticacoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);//Para registrar a classe que tem o filtro não é via anotação tem de ser na classe SecurityConfiguration e adicionamos o filtro antes do filtro de autenticação padrão do Spring
     }
 
-    //Configurações de recursos estáticos (requisições para aqureuivos - JS,CSS, images)
+    //Configurações de recursos estáticos (requisições para aqureuivos - JS,CSS, images) e que não queremos que o Spring security intercepte.
     @Override
     public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
 
     /*public static void main(String[] args) {
