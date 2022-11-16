@@ -146,9 +146,8 @@ Security que essa é a classe service que executa a lógica de autenticação
 > cabeçalho de cada requisição o token e o tipo de autenticação para ter acesso a todos os endpoints atráves desse token
 > conforme tempo de expiração
 
-- Para recuperar o token:
-- Para validar o token:
-- **Para Autenticar o cliente via Spring Security:** Tivemos que criar um filter para pegar o token do cabeçalho,
+- **Para Autenticar o cliente via Spring Security:** Tivemos que criar um filter para pegar/recuperar o token do
+  cabeçalho,
   validar, forçar
   autenticação via Spring security, registrar o filtro no security Configuration, injetar os parâmetros para passar
   para o filter, porque no filtro não posso receber via injeção de dependências, tivemos que criar o
@@ -182,15 +181,25 @@ nas configurações da API cliente**
 
 ## Documentação da API com Swagger
 
-> Devemos documentar nossa API para que os clientes onsigam entender, saber como funciona e fazer testes
+> Devemos documentar nossa API para que os clientes consigam entender, saber como funciona e fazer testes
 
-O Swagger é uma suit que contém várias ferramentas. Por exemplo: 
-- Ferramentas para fazer design de API, para automatizar a criação da API. Baseado no projeto, ele vai gerar o código. Para testes e também para documentação. Se
-você tem uma API pronta, em Java, usando Spring Boot, o Swagger tem ferramentas que conseguem automatizar a leitura
-dessa API e gera uma documentação.
+O Swagger é uma suit que contém várias ferramentas. Por exemplo:
+
+- Ferramentas para fazer design de API, para automatizar a criação da API. Baseado no projeto, ele vai gerar o código.
+  Para testes e também para documentação. Se
+  você tem uma API pronta, em Java, usando Spring Boot, o Swagger tem ferramentas que conseguem automatizar a leitura
+  dessa API e gera uma documentação.
+
+✅ Para testar os endpoints que exigem autenticação na interface do Swagger é necessário configurar um header para enviar
+o token de autenticação na interface do Swagger, ou seja, esse campo para inserir o token não está presente na interface
+por padrão.
+
+> Conclusão: existe o Swagger, que é a ferramenta para fazer a documentação, e o Spring fox Swagger, que é a biblioteca
+> para
+> documentar uma API Java com Spring, utilizando o Swagger.
 
 ## Conhecimento complementar
 
-- Bean: é um objeto que segue as especificações do JavaBeans
+- **Bean**: é um objeto que segue as especificações do JavaBeans
 
 

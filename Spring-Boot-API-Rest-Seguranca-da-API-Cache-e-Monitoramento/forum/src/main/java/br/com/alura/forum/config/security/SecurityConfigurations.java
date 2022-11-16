@@ -65,6 +65,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     }
 
     //Configurações de recursos estáticos (requisições para aqureuivos - JS,CSS, images) e que não queremos que o Spring security intercepte.
+    //Para liberar acesso ao Swagger no Spring Security
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
